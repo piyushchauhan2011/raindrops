@@ -30,16 +30,16 @@ pub const PLAYER_ID: &str = "p1exdMJcjVao65QdewkaZRUnU6VPSXhus9n2GzWfh98";
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct CreateItemClassArgs {
-    item_class_bump: u8,
-    class_index: u64,
-    parent_class_index: Option<u64>,
-    parent_of_parent_class_index: Option<u64>,
-    space: u64,
-    desired_namespace_array_size: u16,
-    update_permissiveness_to_use: Option<PermissivenessType>,
-    store_mint: bool,
-    store_metadata_fields: bool,
-    item_class_data: ItemClassData,
+    pub item_class_bump: u8,
+    pub class_index: u64,
+    pub parent_class_index: Option<u64>,
+    pub parent_of_parent_class_index: Option<u64>,
+    pub space: u64,
+    pub desired_namespace_array_size: u16,
+    pub update_permissiveness_to_use: Option<PermissivenessType>,
+    pub store_mint: bool,
+    pub store_metadata_fields: bool,
+    pub item_class_data: ItemClassData,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
