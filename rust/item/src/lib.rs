@@ -2248,8 +2248,8 @@ pub struct Root {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
 pub struct Boolean {
-    inherited: InheritanceState,
-    boolean: bool,
+    pub inherited: InheritanceState,
+    pub boolean: bool,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
