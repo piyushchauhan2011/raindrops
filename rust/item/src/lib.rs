@@ -1996,22 +1996,22 @@ pub struct Callback {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct ItemUsage {
-    index: u16,
-    basic_item_effects: Option<Vec<BasicItemEffect>>,
-    usage_permissiveness: Vec<PermissivenessType>,
-    inherited: InheritanceState,
-    item_class_type: ItemClassType,
-    callback: Option<Callback>,
-    validation: Option<Callback>,
+    pub index: u16,
+    pub basic_item_effects: Option<Vec<BasicItemEffect>>,
+    pub usage_permissiveness: Vec<PermissivenessType>,
+    pub inherited: InheritanceState,
+    pub item_class_type: ItemClassType,
+    pub callback: Option<Callback>,
+    pub validation: Option<Callback>,
     // Cheaper way to say "this NFT potion cannot be used on the same person 2x"
     // if the potion is an NFT and not a FT
     // Note: Only checks against parent class of item,
     // not all the way up the class tree.
     // Must be enforced by enclosing contract.
-    do_not_pair_with_self: bool,
+    pub do_not_pair_with_self: bool,
     // List of class keys this item cannot be paired with
     // Must be enforced by enclosing contract (usually Player)
-    dnp: Option<Vec<DNPItem>>,
+    pub dnp: Option<Vec<DNPItem>>,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
@@ -2056,16 +2056,16 @@ pub enum BasicItemEffectType {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct BasicItemEffect {
-    amount: u64,
-    stat: String,
-    item_effect_type: BasicItemEffectType,
-    active_duration: Option<u64>,
-    staking_amount_numerator: Option<u64>,
-    staking_amount_divisor: Option<u64>,
-    staking_duration_numerator: Option<u64>,
-    staking_duration_divisor: Option<u64>,
+    pub amount: u64,
+    pub stat: String,
+    pub item_effect_type: BasicItemEffectType,
+    pub active_duration: Option<u64>,
+    pub staking_amount_numerator: Option<u64>,
+    pub staking_amount_divisor: Option<u64>,
+    pub staking_duration_numerator: Option<u64>,
+    pub staking_duration_divisor: Option<u64>,
     // point where this effect no longer applies
-    max_uses: Option<u64>,
+    pub max_uses: Option<u64>,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq)]
@@ -2080,20 +2080,20 @@ pub enum ComponentCondition {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct Component {
-    mint: Pubkey,
-    class_index: u64,
-    amount: u64,
+    pub mint: Pubkey,
+    pub class_index: u64,
+    pub amount: u64,
     // Should be a per-scope, but double layered arrays suck for inheritance
     // therefore we splat this out in duplicative fashion.
     // Only needs to be set on one component to get picked up by the builder.
-    time_to_build: Option<u64>,
+    pub time_to_build: Option<u64>,
     // To have more than one way to craft a component, silo components like this
-    component_scope: String,
+    pub component_scope: String,
     // used to find a valid cooldown state to check for cooldown status on the
     // crafting item
-    use_usage_index: u16,
-    condition: ComponentCondition,
-    inherited: InheritanceState,
+    pub use_usage_index: u16,
+    pub condition: ComponentCondition,
+    pub inherited: InheritanceState,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, Debug)]
@@ -2254,22 +2254,22 @@ pub struct Boolean {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
 pub struct ItemClassSettings {
-    free_build: Option<Boolean>,
-    children_must_be_editions: Option<Boolean>,
+    pub free_build: Option<Boolean>,
+    pub children_must_be_editions: Option<Boolean>,
     // What is this? Well, when you are checking build_permissiveness
     // to build an item, the permissiveness is RELATIVE TO THE ITEM CLASS. So TokenHolder
     // implies you are the token holder of the item class, not the item you are trying to build.
     // Setting this to true requires that to do a build of an item class, the person doing
     // the building MUST ALSO HOLD the new token being built.
-    builder_must_be_holder: Option<Boolean>,
-    update_permissiveness: Option<Vec<Permissiveness>>,
-    build_permissiveness: Option<Vec<Permissiveness>>,
-    staking_warm_up_duration: Option<u64>,
-    staking_cooldown_duration: Option<u64>,
-    staking_permissiveness: Option<Vec<Permissiveness>>,
+    pub builder_must_be_holder: Option<Boolean>,
+    pub update_permissiveness: Option<Vec<Permissiveness>>,
+    pub build_permissiveness: Option<Vec<Permissiveness>>,
+    pub staking_warm_up_duration: Option<u64>,
+    pub staking_cooldown_duration: Option<u64>,
+    pub staking_permissiveness: Option<Vec<Permissiveness>>,
     // if not set, assumed to use staking permissiveness
-    unstaking_permissiveness: Option<Vec<Permissiveness>>,
-    child_update_propagation_permissiveness: Option<Vec<ChildUpdatePropagationPermissiveness>>,
+    pub unstaking_permissiveness: Option<Vec<Permissiveness>>,
+    pub child_update_propagation_permissiveness: Option<Vec<ChildUpdatePropagationPermissiveness>>,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
@@ -2278,20 +2278,20 @@ pub struct ItemClassConfig {
     // Tried to combine roots and vec into a single Option to keep it simple
     // but this led to a proliferation of trait code and dyn statements and I couldnt
     // get it to work. Sorry!
-    usage_root: Option<Root>,
+    pub usage_root: Option<Root>,
     // Used to seed the root for new items
-    usage_state_root: Option<Root>,
-    component_root: Option<Root>,
+    pub usage_state_root: Option<Root>,
+    pub component_root: Option<Root>,
     // Note that both usages and components are mutually exclusive with usage_root and component_root - if those are set, these are considered
     // cached values, and root is source of truth. Up to you to keep them up to date.
-    usages: Option<Vec<ItemUsage>>,
-    components: Option<Vec<Component>>,
+    pub usages: Option<Vec<ItemUsage>>,
+    pub components: Option<Vec<Component>>,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct ItemClassData {
-    settings: ItemClassSettings,
-    config: ItemClassConfig,
+    pub settings: ItemClassSettings,
+    pub config: ItemClassConfig,
 }
 
 #[account]
